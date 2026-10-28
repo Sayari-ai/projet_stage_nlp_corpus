@@ -1,0 +1,26 @@
+# Paramètres du run — toute modification doit être notée dans le rapport correspondant.
+
+dump_date: "20261001"     # date figée des dumps (ne pas utiliser latest/)
+random_seed: 42
+
+scope:
+  target: "toutes les langues africaines disposant d'une édition Wikipédia"
+  initial_languages: [wo, tw, ee, fon, yo, ha]   # incluses dans le périmètre, pas limitatives
+  reference_language: fr                         # comparaison
+  # Éditions établies à la tâche 1 (run 20261023T132917Z) : 67 incluses, 1 à décider.
+  editions:
+    incluses: [
+      aa, af, ak, am, ann, ary, arz, bm, bol, dag, dga, din, ee, fat, ff, fon,
+      gpe, gur, guw, ha, hz, ig, igl, kab, kai, kaj, kbp, kcg, kg, ki, kj, knc,
+      kr, kus, lg, ln, mg, mos, ng, nqo, nr, nso, nup, ny, om, pcm, rn, rw,
+      sg, shi, sn, so, ss, st, sw, ti, tig, tn, ts, tum, tw, ve, wo, xh,
+      yo, zgh, zu
+    ]
+    a_decider: [ar]   # arabe standard : à trancher avec l'encadrant
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  reports: reports
+  corpus: data/processed/corpus                 # texte seul, un fichier par langue (<code>.jsonl)
+  provenance: data/processed/provenance.jsonl   # registre interne, hors corpus

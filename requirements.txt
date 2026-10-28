@@ -1,0 +1,9 @@
+requests>=2.31
+wikipedia-api>=0.16
+mwparserfromhell>=0.6
+pandas>=2.1
+pyarrow>=14.0
+pyyaml>=6.0
+jsonschema>=4.20
+tqdm>=4.66
+beautifulsoup4>=4.12

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "projet_stage_nlp/config/schema_document.json",
+  "title": "Ligne du corpus African Languages Corpus v1",
+  "description": "Le corpus ne contient que du texte : une ligne = le texte extrait, nettoyé et normalisé d'un article. Un fichier par langue : corpus/<code BCP 47>.jsonl. Spécification : docs/schema_document.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["text"],
+  "properties": {
+    "text": {
+      "description": "Texte de l'article, extrait, nettoyé et normalisé (Unicode NFC), sans balisage wiki ni HTML.",
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

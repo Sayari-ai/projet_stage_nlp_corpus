@@ -1,0 +1,136 @@
+{
+  "run_id": "20261027T154013Z",
+  "fin_utc": "2026-10-27T17:25:15Z",
+  "langues": [
+    "wo",
+    "yo",
+    "nqo",
+    "ha",
+    "am"
+  ],
+  "dump_date": "20261001",
+  "dumps": [
+    {
+      "code": "wo",
+      "fichier": "wowiki-20261001-pages-articles.xml.bz2",
+      "taille_mo": 2.3,
+      "sha1": "53cf4066774fe8107f4c5e792dd864a4800759f6"
+    },
+    {
+      "code": "yo",
+      "fichier": "yowiki-20261001-pages-articles.xml.bz2",
+      "taille_mo": 29.5,
+      "sha1": "3d802e68f117370c1024a8b1f134f0c91f37db49"
+    },
+    {
+      "code": "nqo",
+      "fichier": "nqowiki-20261001-pages-articles.xml.bz2",
+      "taille_mo": 2.1,
+      "sha1": "81aa130e42dceb1c37f72035003afc99e0876f1c"
+    },
+    {
+      "code": "ha",
+      "fichier": "hawiki-20261001-pages-articles.xml.bz2",
+      "taille_mo": 186.2,
+      "sha1": "ea0b546ee881133b5da0c60e31cdd62b75163e82"
+    },
+    {
+      "code": "am",
+      "fichier": "amwiki-20261001-pages-articles.xml.bz2",
+      "taille_mo": 9.2,
+      "sha1": "c50221525e3347ff70787ecdf22c6f30951b786d"
+    }
+  ],
+  "python": "3.14.6",
+  "plateforme": "Windows-11-10.0.22631-SP0",
+  "requests": "2.34.2",
+  "mwparserfromhell": "0.7.2",
+  "pandas": "3.0.3",
+  "beautifulsoup4": "4.15.0",
+  "parametres": {
+    "ECHANTILLON_REVUE": 20,
+    "GRAINE": 42,
+    "PAUSE_S": 0.2
+  },
+  "controles": {
+    "corpus valide (A1-A5)": true,
+    "chaque page comptée (C2)": true,
+    "chaque langue a des textes (C1)": true
+  },
+  "validation": {
+    "fichiers": 5,
+    "lignes": 185275,
+    "lignes_valides": 185275,
+    "avec_provenance": 185275
+  },
+  "erreurs_validation": [],
+  "infos_wikis": {
+    "wo": {
+      "dbname": "wowiki",
+      "page_accueil": "Xët wu njëkk",
+      "noms_fichier": [
+        "Dencukaay",
+        "File",
+        "Image"
+      ],
+      "noms_categorie": [
+        "Category",
+        "Catégorie",
+        "Wàll"
+      ]
+    },
+    "yo": {
+      "dbname": "yowiki",
+      "page_accueil": "Ojúewé Àkọ́kọ́",
+      "noms_fichier": [
+        "File",
+        "Fáìlì",
+        "Image",
+        "Àwòrán"
+      ],
+      "noms_categorie": [
+        "Category",
+        "Ẹ̀ka"
+      ]
+    },
+    "nqo": {
+      "dbname": "nqowiki",
+      "page_accueil": "ߓߏ߬ߟߏ߲߬ߘߊ",
+      "noms_fichier": [
+        "File",
+        "Image",
+        "ߞߐߕߐ߮"
+      ],
+      "noms_categorie": [
+        "Category",
+        "ߦߌߟߡߊ"
+      ]
+    },
+    "ha": {
+      "dbname": "hawiki",
+      "page_accueil": "Babban shafi",
+      "noms_fichier": [
+        "Fayil",
+        "File",
+        "Image"
+      ],
+      "noms_categorie": [
+        "Category",
+        "Rukuni"
+      ]
+    },
+    "am": {
+      "dbname": "amwiki",
+      "page_accueil": "ዋናው ገጽ",
+      "noms_fichier": [
+        "File",
+        "Image",
+        "ስዕል"
+      ],
+      "noms_categorie": [
+        "Category",
+        "መደብ"
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "raison":"aucun texte, même dans la page affichée",
+    "wo":1,
+    "yo":150,
+    "nqo":0,
+    "ha":9,
+    "am":35
+  },
+  {
+    "raison":"doublon exact d'un texte déjà gardé",
+    "wo":2,
+    "yo":445,
+    "nqo":8,
+    "ha":163,
+    "am":50
+  },
+  {
+    "raison":"page affichée non disponible (nosuchrevid)",
+    "wo":0,
+    "yo":0,
+    "nqo":0,
+    "ha":3,
+    "am":0
+  }
+]

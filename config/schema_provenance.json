@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "projet_stage_nlp/config/schema_provenance.json",
+  "title": "Registre interne (provenance et qualité), hors corpus",
+  "description": "Fichier séparé du corpus, jamais mélangé au texte. Il relie chaque texte à sa source et à ses contrôles qualité par l'empreinte SHA-256 du texte. Sert au KPI provenance, à l'attribution exigée par la licence CC BY-SA et au rapport qualité.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "text_sha256",
+    "language_code",
+    "source_url",
+    "source_dump",
+    "revision_date",
+    "collected_at",
+    "license",
+    "quality_flags"
+  ],
+  "properties": {
+    "text_sha256": {
+      "description": "Empreinte SHA-256 (hexadécimal) du champ text de la ligne du corpus, encodé en UTF-8.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "language_code": {
+      "description": "Étiquette BCP 47 = nom du fichier du corpus.",
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-([A-Z]{2}|[0-9]{3}))?$"
+    },
+    "source_url": {
+      "description": "Lien permanent vers la révision : https://<code>.wikipedia.org/w/index.php?oldid=<revision_id>.",
+      "type": "string",
+      "pattern": "^https://[a-z-]+\\.wikipedia\\.org/w/index\\.php\\?oldid=[1-9][0-9]*$"
+    },
+    "source_dump": {
+      "description": "<dbname>-<AAAAMMJJ>-pages-articles, ou api-<AAAAMMJJ> pour une collecte par API.",
+      "type": "string",
+      "pattern": "^([a-z_]+wiki-[0-9]{8}-pages-articles|api-[0-9]{8})$"
+    },
+    "revision_date": {
+      "description": "Date de la révision, ISO 8601 UTC.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "collected_at": {
+      "description": "Date d'extraction par le pipeline, ISO 8601 UTC.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    },
+    "license": {
+      "description": "Identifiant SPDX de la licence.",
+      "type": "string",
+      "enum": [
+        "CC-BY-SA-4.0"
+      ]
+    },
+    "quality_flags": {
+      "description": "Problèmes détectés (tâche 7). Liste vide si aucun. Vocabulaire fermé.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "near_duplicate",
+          "boilerplate",
+          "language_mismatch",
+          "template_generated"
+        ]
+      }
+    }
+  }
+}
