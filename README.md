@@ -1,12 +1,12 @@
-# African Languages Corpus — Projet 1 : African Language Data & LLM Readiness
+# African Languages Corpus  Projet 1 : African Language Data & LLM Readiness
 
 Corpus de textes couvrant toutes les langues africaines présentes sur Wikipédia, construit à partir des ressources Wikimedia (Wikipédia en priorité), avec le français comme langue de comparaison.
 
-> Wikimedia est un point de départ, pas une garantie de données suffisantes pour un LLM.
+
 
 ## Périmètre linguistique
 
-**Toutes les langues africaines disposant d'une édition Wikipédia**, et pas seulement les langues initiales (wolof, twi, ewe, fon, yoruba, haoussa).
+**Toutes les langues africaines disposant d'une édition Wikipédia**.
 Le français sert de langue de comparaison.
 
 La liste complète des éditions africaines est établie à la tâche 1 (inventaire). Toute langue écartée doit l'être avec une justification documentée.
@@ -61,7 +61,7 @@ data/processed/
 |---|---|
 | `prototype/20261027T154013Z` | **Run de référence.** 185 275 textes, 73 millions de mots |
 | `inventaire/20261023T132917Z` | Inventaire de référence (tâche 1) |
-| `inventaire/20261023T125033Z` | Premier passage de l'inventaire, remplacé |
+
 
 Textes du run de référence (dumps Wikipédia du 1er octobre 2026) :
 
@@ -84,13 +84,6 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Reproduire un run
-
-À compléter (tâches 5 et 11).
-
-## Avancement
-
-Voir `docs/taches.md`.
 
 ## Licences
 
