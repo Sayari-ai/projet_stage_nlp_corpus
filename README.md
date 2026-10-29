@@ -12,6 +12,7 @@ Le français sert de langue de comparaison.
 La liste complète des éditions africaines est établie à la tâche 1 (inventaire). Toute langue écartée doit l'être avec une justification documentée.
 
 ## Structure
+les dossiers notebook et report sont en restructuration pour une bonne presentation ,ils arrivent bientot
 
 ```
 projet_stage_nlp/
