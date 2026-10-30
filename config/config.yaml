@@ -6,17 +6,16 @@ random_seed: 42
 scope:
   target: "toutes les langues africaines disposant d'une édition Wikipédia"
   initial_languages: [wo, tw, ee, fon, yo, ha]   # incluses dans le périmètre, pas limitatives
-  reference_language: fr                         # comparaison
-  # Éditions établies à la tâche 1 (run 20261023T132917Z) : 67 incluses, 1 à décider.
+  reference_language: fr                         # comparaison : échantillon aléatoire d'articles, pas toute l'édition (décision S2)
+  # Éditions établies à la tâche 1 (run 20261023T132917Z) ; arabe standard (ar) ajouté au checkpoint S2 : 68 incluses.
   editions:
     incluses: [
-      aa, af, ak, am, ann, ary, arz, bm, bol, dag, dga, din, ee, fat, ff, fon,
+      aa, af, ak, am, ann, ar, ary, arz, bm, bol, dag, dga, din, ee, fat, ff, fon,
       gpe, gur, guw, ha, hz, ig, igl, kab, kai, kaj, kbp, kcg, kg, ki, kj, knc,
       kr, kus, lg, ln, mg, mos, ng, nqo, nr, nso, nup, ny, om, pcm, rn, rw,
       sg, shi, sn, so, ss, st, sw, ti, tig, tn, ts, tum, tw, ve, wo, xh,
       yo, zgh, zu
     ]
-    a_decider: [ar]   # arabe standard : à trancher avec l'encadrant
 
 paths:
   raw: data/raw

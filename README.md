@@ -3,16 +3,14 @@
 Corpus de textes couvrant toutes les langues africaines présentes sur Wikipédia, construit à partir des ressources Wikimedia (Wikipédia en priorité), avec le français comme langue de comparaison.
 
 
-
 ## Périmètre linguistique
 
-**Toutes les langues africaines disposant d'une édition Wikipédia**.
+**Toutes les langues africaines disposant d'une édition Wikipédia**,
 Le français sert de langue de comparaison.
 
 La liste complète des éditions africaines est établie à la tâche 1 (inventaire). Toute langue écartée doit l'être avec une justification documentée.
 
 ## Structure
-les dossiers notebook et report sont en restructuration pour une bonne presentation ,ils arrivent bientot
 
 ```
 projet_stage_nlp/
@@ -22,15 +20,17 @@ projet_stage_nlp/
 ├── src/                 # code de collecte et de nettoyage
 ├── notebooks/           # notebooks de collecte (inventaire, prototype)
 ├── data/
-│   ├── raw/             # dumps Wikimedia et réponses API brutes (non versionnés)
-│   └── processed/       # textes collectés et résultats de chaque run (voir ci-dessous)
+│   ├── raw/             # données brutes : dumps Wikimedia (wikitexte) et réponses API (non versionnés)
+│   └── processed/       # textes extraits et nettoyés, et résultats de chaque run (voir ci-dessous)
 ├── reports/             # rapports par tâche
 └── docs/                # liste des tâches, schéma, registre sources/licences
 ```
 
 ## Dossier `data/processed`
 
-Il contient les **textes bruts collectés** et les résultats de chaque run, dans un sous-dossier daté par run (`AAAAMMJJTHHMMSSZ`, heure UTC).
+Il contient les **textes extraits et nettoyés** et les résultats de chaque run, dans un sous-dossier daté par run (`AAAAMMJJTHHMMSSZ`, heure UTC).
+
+**Brut ou nettoyé.** Le texte brut est dans `data/raw/dumps/<date>/` : ce sont les dumps Wikipédia, qui contiennent le wikitexte de chaque article avec son balisage. chaque article est lu dans le dump, son texte est extrait et nettoyé, puis écrit directement dans `data/processed/.../corpus/<code>.jsonl`. Les textes de `data/processed` ne sont donc plus bruts, mais ils ne sont pas encore normalisés (tâche 6) ni contrôlés (tâche 7).
 
 ```
 data/processed/
@@ -51,8 +51,8 @@ data/processed/
     ├── journal_requetes.jsonl        # requêtes faites aux serveurs Wikimedia
     └── run_metadata.json             # versions, paramètres, empreintes des dumps, résultats des contrôles
 ```
+Ce que sont les textes. Chaque ligne de corpus/<code>.jsonl est le texte d'un article Wikipédia : paragraphes, titres de section, texte des liens et des cellules de tableau. Le wiki de balisage, les images, les modèles, les références et les catégories sont retirés, et le texte est en Unicode NFC. Tous les textes sont gardés, sauf les doublons exacts. Les textes ne sont pas encore normalisés (tâche 6) ni contrôlés pour les quasi-doublons et la langue (tâche 7).
 
-**Ce que sont les textes.** Chaque ligne de `corpus/<code>.jsonl` est le texte d'un article Wikipédia : paragraphes, titres de section, texte des liens et des cellules de tableau. Le balisage wiki, les images, les modèles, les références et les catégories sont retirés, et le texte est en Unicode NFC. Tous les textes sont gardés, sauf les doublons exacts. Les textes ne sont pas encore normalisés (tâche 6) ni contrôlés pour les quasi-doublons et la langue (tâche 7).
 
 **Lien entre texte et source.** Le corpus ne contient que le texte. Pour retrouver l'article d'origine, calculer l'empreinte SHA-256 du texte et la chercher dans `provenance.jsonl`.
 
@@ -84,7 +84,6 @@ python -m venv .venv
 .venv\Scripts\activate           # Linux / macOS : source .venv/bin/activate
 pip install -r requirements.txt
 ```
-
 
 ## Licences
 
