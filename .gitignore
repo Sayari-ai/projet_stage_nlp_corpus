@@ -11,3 +11,4 @@ notebooks/.gitkeep
 reports/*
 src/*
 copie/*
+.env

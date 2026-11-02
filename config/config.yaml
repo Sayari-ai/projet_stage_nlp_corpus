@@ -26,7 +26,7 @@ paths:
 
 # Pipeline de collecte (tâche 5) : python src/collecter.py
 pipeline:
-  contact: "jerome.akota@afriklang.com"   # contact du User-Agent (politique Wikimedia)
+  # contact du User-Agent (politique Wikimedia) : variable WIKIMEDIA_CONTACT du fichier .env, non versionné
   pause_api_s: 0.2                        # pause entre deux requêtes API
   tentatives_max: 8                       # nouvelles tentatives en cas d'erreur réseau
   point_de_reprise_pages: 5000            # état enregistré toutes les N pages
