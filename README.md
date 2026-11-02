@@ -64,16 +64,6 @@ Ce que sont les textes. Chaque ligne de corpus/<code>.jsonl est le texte d'un ar
 | `inventaire/20261023T132917Z` | Inventaire de référence (tâche 1) |
 
 
-Textes du run de référence (dumps Wikipédia du 1er octobre 2026) :
-
-| Langue | Code | Textes | Mots | Taille du fichier |
-|---|---|---|---|---|
-| Wolof | `wo` | 1 809 | 608 966 | 3,4 Mo |
-| Yoruba | `yo` | 41 803 | 5 637 920 | 40,3 Mo |
-| N'ko | `nqo` | 1 726 | 812 329 | 8,6 Mo |
-| Haoussa | `ha` | 123 651 | 64 034 554 | 377,9 Mo |
-| Amharique | `am` | 16 286 | 1 913 602 | 24,6 Mo |
-| **Total** | | **185 275** | **73 007 371** | |
 
 **Licence.** Les textes viennent de Wikipédia et restent sous licence CC BY-SA 4.0. Toute réutilisation doit citer les articles d'origine (adresses dans `provenance.jsonl`), indiquer que le texte a été modifié et garder la même licence.
 

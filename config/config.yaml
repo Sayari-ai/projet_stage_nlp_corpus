@@ -23,3 +23,12 @@ paths:
   reports: reports
   corpus: data/processed/corpus                 # texte seul, un fichier par langue (<code>.jsonl)
   provenance: data/processed/provenance.jsonl   # registre interne, hors corpus
+
+# Pipeline de collecte (tâche 5) : python src/collecter.py
+pipeline:
+  contact: "jerome.akota@afriklang.com"   # contact du User-Agent (politique Wikimedia)
+  pause_api_s: 0.2                        # pause entre deux requêtes API
+  tentatives_max: 8                       # nouvelles tentatives en cas d'erreur réseau
+  point_de_reprise_pages: 5000            # état enregistré toutes les N pages
+  processus: 0                            # extraction en parallèle ; 0 = nombre de cœurs - 1
+  echantillon_fr: 100000                  # articles français tirés au hasard (décision S2)
