@@ -6,9 +6,7 @@ data/raw/*
 !data/processed/.gitkeep
 docs/*
 env/*
-notebooks/collecte_pipeline.ipynb
 notebooks/.gitkeep
 reports/*
-src/*
 copie/*
 .env
