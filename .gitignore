@@ -8,5 +8,6 @@ docs/*
 env/*
 notebooks/.gitkeep
 reports/*
+!reports/Pipeline_collecte_tache5.pptx
 copie/*
 .env
