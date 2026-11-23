@@ -53,6 +53,16 @@
         "CC-BY-SA-4.0"
       ]
     },
+    "text_sha256_collecte": {
+      "description": "Après normalisation (tâche 6) : empreinte SHA-256 du texte tel qu'il était dans le corpus de la collecte (tâche 5), pour relier les deux versions.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "normalized_at": {
+      "description": "Après normalisation (tâche 6) : date de la normalisation, ISO 8601 UTC.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
     "quality_flags": {
       "description": "Problèmes détectés (tâche 7). Liste vide si aucun. Vocabulaire fermé.",
       "type": "array",

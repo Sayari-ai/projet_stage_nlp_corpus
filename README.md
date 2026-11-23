@@ -16,7 +16,7 @@ La liste complète des éditions africaines est établie à la tâche 1 (inventa
 
 - `config/` : les réglages des runs (`config.yaml` : langues, date des dumps, réglages du pipeline) et les deux schémas JSON du corpus et de la provenance.
 - `src/` : le code de collecte et de nettoyage, décrit juste après.
-- `notebooks/` : un notebook par étape : l'inventaire (`inventaire_wikimedia.ipynb`, tâche 1), le prototype (`prototype_collecte.ipynb`, tâche 4) et le lancement du pipeline (`collecte_pipeline.ipynb`, tâche 5).
+- `notebooks/` : un notebook par étape — l'inventaire (`inventaire_wikimedia.ipynb`, tâche 1), le prototype (`prototype_collecte.ipynb`, tâche 4), le lancement du pipeline (`collecte_pipeline.ipynb`, tâche 5), la normalisation (`normalisation.ipynb`, tâche 6), le contrôle qualité (`controle_qualite.ipynb`, tâche 7), l'export final (`exporter.ipynb`, tâche 8), le rapport qualité (`rapport_qualite.ipynb`, tâche 9) et les splits (`split.ipynb`, tâche 10).
 - `data/processed/` : les résultats de chaque run (voir plus bas).
 - `data/raw/` : supprimé (voir plus bas).
 - `reports/` et `docs/` : les rapports de chaque tâche et la documentation, non versionnés pour l'instant.
@@ -31,6 +31,11 @@ La liste complète des éditions africaines est établie à la tâche 1 (inventa
 - `extraire_html.py` : les mêmes règles appliquées à la page affichée, pour les articles faits uniquement de modèles.
 - `francais.py` : tire au hasard les 100 000 articles de l'échantillon français.
 - `valider_records.py` : vérifie chaque texte du corpus et sa provenance.
+- `normaliser.py` : la normalisation du texte (tâche 6), décrite plus bas.
+- `controle_qualite.py` : détection des doublons et contrôle qualité (tâche 7) — quasi-doublons, ébauches en série, texte répété, mauvaise langue (GlotLID v3). N'enlève rien : écrit des `quality_flags` dans la provenance.
+- `exporter.py` : export final (tâche 8) — corpus + provenance définitifs (JSONL et Parquet), écarte les erreurs de collecte, valide le schéma de chaque ligne.
+- `rapport_qualite.py` : statistiques et couverture par langue (tâche 9) — agrège les bilans déjà produits par les étapes précédentes, ne relit aucune donnée brute.
+- `split.py` : splits train/validation/test (tâche 10) — ajoute le champ `split` à la provenance, sans jamais séparer un texte de ses quasi-doublons ou de son doublon exact dans une autre langue.
 
 Pour lancer une collecte, créer d'abord le fichier `.env` à partir de `.env.example`, puis :
 
@@ -115,6 +120,45 @@ python src/collecter.py --langues wo yo ha     # ou seulement quelques éditions
 - Les pages lues par l'API sont relues dans leur état du jour : leur texte peut légèrement différer.
 - Les réponses brutes de l'inventaire se retrouvent en relançant `notebooks/inventaire_wikimedia.ipynb`.
 
+## Contrôle qualité (tâche 7)
+
+```bash
+python src/controle_qualite.py --sonder-langues      # une seule fois : prépare GlotLID
+python src/controle_qualite.py                       # doublons, quasi-doublons, ébauches, texte répété, mauvaise langue
+```
+
+Source : `data/processed/normalise/20261113T141439Z` (sortie de la tâche 6, jamais modifiée). Rien n'est retiré du corpus : chaque texte reçoit un champ `quality_flags` (0 à 4 valeurs parmi `near_duplicate`, `template_generated`, `boilerplate`, `language_mismatch`) écrit dans la provenance. Run de référence : `qualite/analyses/20261122T070453Z_ecriture_drapeaux` — 965 559 / 3 948 957 textes avec au moins un drapeau ; 4 erreurs de collecte identifiées, à écarter à l'export (tâche 8).
+
+## Export final (tâche 8)
+
+```bash
+python src/exporter.py
+```
+
+Combine le corpus normalisé (tâche 6) et les `quality_flags` (tâche 7) en corpus et provenance **définitifs** :
+
+- `data/processed/corpus/<code>.jsonl` : `{"text": ...}` seul (schéma tâche 2).
+- `data/processed/provenance/<code>.jsonl` et `provenance.parquet` : `text_sha256`, `language_code`, `source_url`, `source_dump`, `revision_date`, `collected_at`, `license`, `quality_flags`, `split` (ajouté tâche 10) — relié au corpus par empreinte SHA-256, jamais par position de ligne.
+- `data/processed/exclusions.jsonl` : textes écartés (erreurs de collecte), avec leur raison.
+
+Run de référence : `qualite/analyses/20261122T081323Z_export` — 3 948 957 → **3 948 953 textes exportés**, 4 exclusions justifiées, 0 anomalie.
+
+## Rapport qualité et statistiques (tâche 9)
+
+```bash
+python src/rapport_qualite.py
+```
+
+Agrège les bilans déjà produits (tâches 5 à 8) — ne relit aucune donnée brute. Sorties : `data/processed/qualite/rapport_qualite_par_langue.csv`/`.jsonl`, `couverture.json`, `manifeste_collecte.csv`/`.jsonl`. Rapport : `reports/Rapport_tache9_qualite_statistiques.docx`. Couverture : **65/68 langues (95,6 %)** ; `aa`, `hz`, `kr` justifiées à 0 texte (dumps sans contenu réel).
+
+## Splits train/validation/test (tâche 10)
+
+```bash
+python src/split.py
+```
+
+Ajoute le champ `split` (`train`/`validation`/`test`) à `provenance/<code>.jsonl` et `provenance.parquet` — 80/10/10 par langue ; langues de moins de 20 textes forcées en train (val/test vides, justifié) ; quasi-doublons et doublons exacts inter-langues toujours regroupés dans un seul split (anti-fuite). Reproductible : attribution par hachage de `text_sha256` + `random_seed` (`config.yaml`). Rapport : `reports/Rapport_tache10_splits.docx`. Run de référence : `qualite/analyses/20261123T212903Z_split` — 3 944 groupes anti-fuite (11 096 textes), 0 anomalie.
+
 ## Installation
 
 ```bash
@@ -122,6 +166,40 @@ python -m venv .venv
 .venv\Scripts\activate           # Linux / macOS : source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Pipeline complet
+
+| Étape | Commande | Source | Sortie |
+|---|---|---|---|
+| 5. Collecte | `python src/collecter.py --tout` | dumps Wikimedia (`dump_date` config) | `data/processed/collecte/<run>/` |
+| 6. Normalisation | `python src/normaliser.py` | `collecte/<run>` (config `normalisation.source`) | `data/processed/normalise/<run>/` |
+| 7. Contrôle qualité | `python src/controle_qualite.py` | `normalise/<run>` (config `qualite.source`) | `quality_flags` dans `qualite/analyses/.../provenance/` |
+| 8. Export final | `python src/exporter.py` | `normalise/<run>` + drapeaux tâche 7 (config `export`) | `corpus/`, `provenance/`, `provenance.parquet` |
+| 9. Rapport qualité | `python src/rapport_qualite.py` | bilans des tâches 5 à 8 | `qualite/rapport_qualite_par_langue.*`, `couverture.json` |
+| 10. Splits | `python src/split.py` | `provenance/` (config `split`) | champ `split` dans `provenance/*` |
+
+Chaque étape lit la sortie de la précédente via le chemin figé dans `config.yaml` (jamais « le dernier run » implicitement) — un run antérieur n'est donc jamais modifié par l'étape suivante.
+
+## Reproductibilité (tâche 11)
+
+Un 2e ingénieur peut vérifier qu'il retrouve les mêmes résultats sans tout retélécharger :
+
+1. **Installer** : `python -m venv .venv`, `pip install -r requirements.txt`, créer `.env` depuis `.env.example`.
+2. **Récupérer les données** : télécharger `data/processed/` depuis le [lien Google Drive](https://drive.google.com/drive/folders/1X9HGd6F25eF9CYrUrn5xehZAwgiCpp6Z?usp=sharing) (contient tous les runs de référence cités dans ce README, avec leurs `bilan.json`).
+3. **Rejouer une étape déterministe** sans tout relancer, par exemple la tâche 10 (quelques minutes, pas de téléchargement) :
+   ```bash
+   python src/split.py
+   ```
+   Comparer le `bilan.json` produit (`data/processed/qualite/analyses/<nouveau_run>_split/`) à celui du run de référence (`20261123T212903Z_split`) : mêmes totaux (3 948 953 textes, 3 158 096/395 938/394 919 train/validation/test), mêmes 3 944 groupes anti-fuite, 0 anomalie — l'attribution est un hachage déterministe (`text_sha256` + `random_seed`), donc bit-à-bit identique.
+4. **Rejouer sur un sous-ensemble** pour vérifier la chaîne complète sans attendre des heures :
+   ```bash
+   python src/collecter.py --langues wo yo
+   python src/normaliser.py
+   python src/controle_qualite.py
+   python src/exporter.py --langues wo yo
+   ```
+   Comparer les comptes obtenus (`bilan.json` de chaque étape) à ceux du run de référence pour `wo` et `yo` uniquement.
+5. **Limites à documenter** : un run complet (68 langues + échantillon français) dépend de la disponibilité des dumps à la date figée (`dump_date` dans `config.yaml`) — Wikimedia ne garde en ligne que les dumps récents (voir section `data/raw`). L'échantillon français (tirage aléatoire) n'est pas reproductible à l'identique sans la liste d'origine (perdue, voir plus haut) ; seul son volume (≈100 000 articles) l'est.
 
 ## Licences
 

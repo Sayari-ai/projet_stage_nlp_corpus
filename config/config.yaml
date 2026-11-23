@@ -22,7 +22,10 @@ paths:
   processed: data/processed
   reports: reports
   corpus: data/processed/corpus                 # texte seul, un fichier par langue (<code>.jsonl)
-  provenance: data/processed/provenance.jsonl   # registre interne, hors corpus
+  provenance: data/processed/provenance        # registre interne, hors corpus (un fichier <code>.jsonl par langue)
+  provenance_parquet: data/processed/provenance.parquet   # même contenu que provenance.jsonl, en Parquet
+  exclusions: data/processed/exclusions.jsonl             # textes écartés à l'export, avec leur raison
+  export_exemples: data/processed/export_exemples.jsonl   # quelques exemples par langue (texte + provenance)
 
 # Pipeline de collecte (tâche 5) : python src/collecter.py
 pipeline:
@@ -32,3 +35,27 @@ pipeline:
   point_de_reprise_pages: 5000            # état enregistré toutes les N pages
   processus: 0                            # extraction en parallèle ; 0 = nombre de cœurs - 1
   echantillon_fr: 100000                  # articles français tirés au hasard (décision S2)
+
+# Normalisation (tâche 6) : python src/normaliser.py
+normalisation:
+  source: data/processed/collecte/20261105T065025Z   # corpus de la collecte (tâche 5), jamais modifié
+  processus: 0                                       # langues traitées en parallèle ; 0 = nombre de cœurs - 1
+
+# Contrôle qualité (tâche 7) : python src/controle_qualite.py
+qualite:
+  source: data/processed/normalise/20261113T141439Z  # corpus normalisé (tâche 6), jamais modifié ni recopié
+  processus: 0                                       # langues traitées en parallèle ; 0 = nombre de cœurs - 1
+  processus_langue: 1   # 7.5 (GlotLID) : un seul processus = un seul modèle (1,7 Go) chargé en mémoire
+
+# Export final (tâche 8) : python src/exporter.py
+export:
+  source: data/processed/normalise/20261113T141439Z  # corpus normalisé (texte), même source que la tâche 7
+  qualite: data/processed/qualite/analyses/20261122T070453Z_ecriture_drapeaux  # provenance finale (quality_flags) + exclusions_export.jsonl de la tâche 7
+
+# Splits train/validation/test (tâche 10) : python src/split.py
+split:
+  ratios: {train: 0.8, validation: 0.1, test: 0.1}   # décidé le 23/11
+  seuil_langue_min: 20   # langues avec moins de textes : tout en train (val/test vides, justifié) — décidé le 23/11
+  source: data/processed/normalise/20261113T141439Z           # même source que tâches 7/8 (provenance par index, pour les quasi-doublons)
+  quasi_doublons: data/processed/qualite/analyses/20261118T073610Z_quasi_doublons   # groupes near_duplicate (tâche 7.2)
+  doublons_langues: data/processed/qualite/analyses/20261113T171907Z_doublons_langues   # groupes doublons exacts inter-langues (tâche 7.1)
