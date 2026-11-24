@@ -16,7 +16,7 @@ La liste complète des éditions africaines est établie à la tâche 1 (inventa
 
 - `config/` : les réglages des runs (`config.yaml` : langues, date des dumps, réglages du pipeline) et les deux schémas JSON du corpus et de la provenance.
 - `src/` : le code de collecte et de nettoyage, décrit juste après.
-- `notebooks/` : un notebook par étape — l'inventaire (`inventaire_wikimedia.ipynb`, tâche 1), le prototype (`prototype_collecte.ipynb`, tâche 4), le lancement du pipeline (`collecte_pipeline.ipynb`, tâche 5), la normalisation (`normalisation.ipynb`, tâche 6), le contrôle qualité (`controle_qualite.ipynb`, tâche 7), l'export final (`exporter.ipynb`, tâche 8), le rapport qualité (`rapport_qualite.ipynb`, tâche 9) et les splits (`split.ipynb`, tâche 10).
+- `notebooks/` : un notebook par étape, l'inventaire (`inventaire_wikimedia.ipynb`, tâche 1), le prototype (`prototype_collecte.ipynb`, tâche 4), le lancement du pipeline (`collecte_pipeline.ipynb`, tâche 5), la normalisation (`normalisation.ipynb`, tâche 6), le contrôle qualité (`controle_qualite.ipynb`, tâche 7), l'export final (`exporter.ipynb`, tâche 8), le rapport qualité (`rapport_qualite.ipynb`, tâche 9) et les splits (`split.ipynb`, tâche 10).
 - `data/processed/` : les résultats de chaque run (voir plus bas).
 - `data/raw/` : supprimé (voir plus bas).
 - `reports/` et `docs/` : les rapports de chaque tâche et la documentation, non versionnés pour l'instant.
@@ -32,10 +32,10 @@ La liste complète des éditions africaines est établie à la tâche 1 (inventa
 - `francais.py` : tire au hasard les 100 000 articles de l'échantillon français.
 - `valider_records.py` : vérifie chaque texte du corpus et sa provenance.
 - `normaliser.py` : la normalisation du texte (tâche 6), décrite plus bas.
-- `controle_qualite.py` : détection des doublons et contrôle qualité (tâche 7) — quasi-doublons, ébauches en série, texte répété, mauvaise langue (GlotLID v3). N'enlève rien : écrit des `quality_flags` dans la provenance.
-- `exporter.py` : export final (tâche 8) — corpus + provenance définitifs (JSONL et Parquet), écarte les erreurs de collecte, valide le schéma de chaque ligne.
-- `rapport_qualite.py` : statistiques et couverture par langue (tâche 9) — agrège les bilans déjà produits par les étapes précédentes, ne relit aucune donnée brute.
-- `split.py` : splits train/validation/test (tâche 10) — ajoute le champ `split` à la provenance, sans jamais séparer un texte de ses quasi-doublons ou de son doublon exact dans une autre langue.
+- `controle_qualite.py` : détection des doublons et contrôle qualité (tâche 7) quasi-doublons, ébauches en série, texte répété, mauvaise langue (GlotLID v3). N'enlève rien : écrit des `quality_flags` dans la provenance.
+- `exporter.py` : export final (tâche 8) corpus + provenance définitifs (JSONL et Parquet), écarte les erreurs de collecte, valide le schéma de chaque ligne.
+- `rapport_qualite.py` : statistiques et couverture par langue (tâche 9) agrège les bilans déjà produits par les étapes précédentes, ne relit aucune donnée brute.
+- `split.py` : splits train/validation/test (tâche 10) ajoute le champ `split` à la provenance, sans jamais séparer un texte de ses quasi-doublons ou de son doublon exact dans une autre langue.
 
 Pour lancer une collecte, créer d'abord le fichier `.env` à partir de `.env.example`, puis :
 
@@ -70,41 +70,7 @@ Ce que sont les textes. Chaque ligne de corpus/<code>.jsonl est le texte d'un ar
 
 **Lien entre texte et source.** Le corpus ne contient que le texte. Pour retrouver l'article d'origine, calculer l'empreinte SHA-256 du texte et la chercher dans le fichier de provenance de la langue.
 
-**Runs présents.**
-
-| Run | Contenu |
-|---|---|
-| `collecte/20261105T065025Z` | **Run de référence (tâche 5).** 68 éditions et 100 000 articles français : 3 948 960 textes, 721 millions de mots |
-| `prototype/20261027T154013Z` | Prototype (tâche 4) : 5 langues, 185 275 textes |
-| `inventaire/20261023T132917Z` | Inventaire de référence (tâche 1) |
-
-
-
 **Licence.** Les textes viennent de Wikipédia et restent sous licence CC BY-SA 4.0. Toute réutilisation doit citer les articles d'origine (adresses dans `provenance.jsonl`), indiquer que le texte a été modifié et garder la même licence.
-
-## Dossier `data/raw` (supprimé)
-
-Le dossier `data/raw` contenait les données brutes téléchargées pendant les collectes. Il a été supprimé après le run complet de la tâche 5 (`data/processed/collecte/20261105T065025Z`).
-
-**Ce qu'il contenait**
-
-| Chemin | Contenu | Produit par |
-|---|---|---|
-| `data/raw/dumps/20261001/` | Les dumps Wikipédia `pages-articles` du 1er octobre 2026 : 77 fichiers `.xml.bz2` pour 68 éditions (3,2 Go). Ils contiennent le wikitexte de chaque article, avec son balisage | `src/collecter.py` (tâche 5), notebook du prototype (tâche 4) |
-| `data/raw/api/parse/<code>/<révision>.json` | Réponses brutes de l'API (`action=parse`) pour les pages dont le texte a été lu dans la page affichée (environ 7 800 pages) | `src/collecter.py` |
-| `data/raw/api/fr/` | L'échantillon français : liste des 100 000 articles tirés au hasard (`echantillon_100000.json`) et réponses brutes de l'API par lots de 50 (`revisions/`) | `src/collecter.py` |
-| `data/raw/api/siteinfo/` | Informations de chaque wiki : noms des espaces Fichier et Catégorie, préfixes des liens vers les autres langues | `src/collecter.py` |
-| `data/raw/inventaire/<run>/` | Réponses brutes de l'API pour l'inventaire de la tâche 1 | `notebooks/inventaire_wikimedia.ipynb` |
-
-**Pourquoi on n'en a plus besoin**
-
-- Le nettoyage suivant (tâches 6 et 7) part des textes déjà extraits dans `data/processed/collecte/<run>/corpus/`, pas des dumps.
-- La provenance de chaque texte (adresse de la révision, dump d'origine, dates, licence) est conservée dans `data/processed/collecte/<run>/provenance/`.
-- Le dossier pesait plus de 3 Go et n'était pas versionné : trop gros pour GitHub.
-
-**Pour le retrouver**
-
-Relancer la collecte : le pipeline recrée `data/raw` et retélécharge ce qui manque.
 
 ```bash
 # fichier .env à la racine du projet (voir .env.example) :
@@ -190,7 +156,7 @@ Un 2e ingénieur peut vérifier qu'il retrouve les mêmes résultats sans tout r
    ```bash
    python src/split.py
    ```
-   Comparer le `bilan.json` produit (`data/processed/qualite/analyses/<nouveau_run>_split/`) à celui du run de référence (`20261123T212903Z_split`) : mêmes totaux (3 948 953 textes, 3 158 096/395 938/394 919 train/validation/test), mêmes 3 944 groupes anti-fuite, 0 anomalie — l'attribution est un hachage déterministe (`text_sha256` + `random_seed`), donc bit-à-bit identique.
+   Comparer le `bilan.json` produit (`data/processed/qualite/analyses/<nouveau_run>_split/`) à celui du run de référence (`20261123T212903Z_split`) : mêmes totaux (3 948 953 textes, 3 158 096/395 938/394 919 train/validation/test), mêmes 3 944 groupes anti-fuite, 0 anomalie l'attribution est un hachage déterministe (`text_sha256` + `random_seed`), donc bit-à-bit identique.
 4. **Rejouer sur un sous-ensemble** pour vérifier la chaîne complète sans attendre des heures :
    ```bash
    python src/collecter.py --langues wo yo
@@ -199,7 +165,7 @@ Un 2e ingénieur peut vérifier qu'il retrouve les mêmes résultats sans tout r
    python src/exporter.py --langues wo yo
    ```
    Comparer les comptes obtenus (`bilan.json` de chaque étape) à ceux du run de référence pour `wo` et `yo` uniquement.
-5. **Limites à documenter** : un run complet (68 langues + échantillon français) dépend de la disponibilité des dumps à la date figée (`dump_date` dans `config.yaml`) — Wikimedia ne garde en ligne que les dumps récents (voir section `data/raw`). L'échantillon français (tirage aléatoire) n'est pas reproductible à l'identique sans la liste d'origine (perdue, voir plus haut) ; seul son volume (≈100 000 articles) l'est.
+5. **Limites à documenter** : un run complet (68 langues + échantillon français) dépend de la disponibilité des dumps à la date figée (`dump_date` dans `config.yaml`) Wikimedia ne garde en ligne que les dumps récents (voir section `data/raw`). L'échantillon français (tirage aléatoire) n'est pas reproductible à l'identique sans la liste d'origine (perdue, voir plus haut) ; seul son volume (≈100 000 articles) l'est.
 
 ## Licences
 

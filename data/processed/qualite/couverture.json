@@ -1,0 +1,12 @@
+{
+ "perimetre_cible": 68,
+ "langues_couvertes": 65,
+ "langues_a_zero_texte_final": [
+  "aa",
+  "hz",
+  "kr"
+ ],
+ "langues_cibles_jamais_traitees": [],
+ "langue_reference_fr_incluse": true,
+ "couverture_pourcentage": 95.6
+}

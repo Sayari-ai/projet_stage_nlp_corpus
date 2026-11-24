@@ -1,7 +1,8 @@
 """Pipeline de collecte reproductible (tâche 5).
 
 Usage (depuis la racine du projet) :
-    python src/collecter.py --langues wo yo nqo ha am     # run de test sur quelques langues
+    python src/collecter.py --langues ha                  # run ciblé : seul le haoussa est recollecté
+    python src/collecter.py --langues wo yo nqo ha am     # run ciblé sur plusieurs langues
     python src/collecter.py --tout                        # les éditions retenues + l'échantillon français
     python src/collecter.py --reprendre                   # reprend le dernier run non terminé
     python src/collecter.py --reprendre 20261030T120000Z  # reprend ce run
@@ -13,6 +14,12 @@ Pour chaque langue, dans l'ordre des dumps les plus petits aux plus grands :
     4. validation automatique (schéma, règles, provenance) et mesures.
 Le français (langue de comparaison) est un échantillon tiré par l'API, traité en dernier.
 Tout est noté dans run.log et journal_requetes.jsonl ; l'état est dans etat.json.
+
+Run ciblé (--langues) : seules les langues demandées sont (re)collectées. Les autres langues du
+périmètre sont reprises telles quelles depuis le dernier run terminé (copie de corpus/provenance/
+mesures ; la source n'est jamais modifiée ni retraitée), afin que ce nouveau run reste un snapshot
+complet directement utilisable par la suite du pipeline. S'il n'existe encore aucun run terminé,
+seules les langues demandées seront présentes (comportement précédent, inchangé).
 """
 import argparse
 import json
@@ -89,6 +96,34 @@ def dernier_run_non_termine(dossier_collecte):
     return None
 
 
+def dernier_run_termine(dossier_collecte):
+    """Le run le plus récent dont le statut commence par « terminé » (avec ou sans échecs)."""
+    for d in sorted(dossier_collecte.glob("*T*Z"), reverse=True):
+        e = d / "etat.json"
+        if e.exists() and json.loads(e.read_text(encoding="utf-8")).get("statut", "").startswith("terminé"):
+            return d
+    return None
+
+
+def reprendre_langues_non_ciblees(run_source, dossier_run, codes):
+    """Reprend telles quelles (copie, jamais retraitées) les sorties déjà validées d'un run terminé,
+    pour des langues qui ne sont pas ciblées par le run en cours — afin que ce dernier reste un
+    snapshot complet sans jamais lire ni écrire dans le dossier source. Retourne les codes repris."""
+    repris = []
+    for code in codes:
+        fichiers = {"corpus": run_source / "corpus" / f"{code}.jsonl",
+                    "provenance": run_source / "provenance" / f"{code}.jsonl",
+                    "mesures": run_source / "mesures" / f"{code}.json"}
+        if not all(p.exists() for p in fichiers.values()):
+            continue
+        for sous_dossier, src in fichiers.items():
+            dst = dossier_run / sous_dossier / src.name
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+        repris.append(code)
+    return repris
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Collecte reproductible du corpus (tâche 5)")
     g = ap.add_mutually_exclusive_group(required=True)
@@ -128,6 +163,7 @@ def main(argv=None):
         etat["statut"] = "en cours"
     else:
         autorises = V.codes_autorises()
+        cible = not args.tout                   # run ciblé sur un sous-ensemble de langues
         if args.tout:
             langues = list(config["scope"]["editions"]["incluses"])
             francais = True
@@ -143,9 +179,30 @@ def main(argv=None):
         shutil.copy(ROOT / "config" / "config.yaml", dossier_run / "config.yaml")
         etat = {"run_id": run_id, "statut": "en cours", "debut_utc": maintenant(), "version_pipeline": VERSION,
                 "version_code_git": version_code(), "dump_date": config["dump_date"],
-                "langues_demandees": langues, "francais": francais, "langues": {}}
+                "langues_demandees": langues, "francais": francais, "langues": {}, "langues_reprises": []}
+
+        # run ciblé : complète avec les langues non demandées, reprises telles quelles (copie, jamais
+        # retraitées) depuis le dernier run terminé, pour que ce run reste un snapshot complet
+        if cible:
+            run_source = dernier_run_termine(dossier_collecte)
+            if run_source is not None:
+                fr_code = config["scope"]["reference_language"]
+                a_reprendre = [c for c in config["scope"]["editions"]["incluses"] if c not in langues]
+                if not francais:
+                    a_reprendre.append(fr_code)
+                repris = reprendre_langues_non_ciblees(run_source, dossier_run, a_reprendre)
+                for code in repris:
+                    etat["langues"][code] = {"statut": "terminée", "reprise_de": run_source.name}
+                etat["langues_reprises"] = repris
+                manquantes = sorted(set(a_reprendre) - set(repris))
+                if manquantes:
+                    log.warning("Absentes de %s, non reprises (seront manquantes dans ce run) : %s",
+                               run_source.name, ", ".join(manquantes))
+
         configurer_journal(dossier_run)
-        log.info("Nouveau run %s : %s édition(s)%s", run_id, len(langues), " + échantillon français" if francais else "")
+        log.info("Nouveau run %s : %s édition(s) à (re)collecter%s%s", run_id, len(langues),
+                 " + échantillon français" if francais else "",
+                 f", {len(etat['langues_reprises'])} reprise(s) telle(s) quelle(s)" if etat["langues_reprises"] else "")
 
     def sauver_etat():
         ecrire_json(dossier_run / "etat.json", etat)
@@ -274,7 +331,7 @@ def main(argv=None):
         "version_pipeline": VERSION, "version_code_git": etat.get("version_code_git"), "outils": versions_outils(),
         "dump_date": date, "dumps": {c: etat["langues"][c].get("dump") for c in ordre},
         "echantillon_fr": etat["langues"].get(fr, {}).get("echantillon"), "processus": processus,
-        "controles": controles, "echecs": echecs,
+        "controles": controles, "echecs": echecs, "langues_reprises": etat.get("langues_reprises", []),
         "totaux": {"textes": sum(m["textes"] for m in toutes), "mots": sum(m["mots_total"] for m in toutes)}})
     log.info("Run %s %s : %s langue(s), %s textes, %s mots", run_id, etat["statut"], len(toutes),
              sum(m["textes"] for m in toutes), sum(m["mots_total"] for m in toutes))

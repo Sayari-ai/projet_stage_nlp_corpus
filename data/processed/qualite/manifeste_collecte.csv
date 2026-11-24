@@ -1,0 +1,70 @@
+langue,dump_fichiers,dump_taille_octets,pages_ns0_dump,textes_collecte,exclusions_collecte,raisons_exclusion_collecte,mots_total_collecte,mots_mediane_collecte
+aa,aawiki-20261001-pages-articles.xml.bz2,34753,1,0,1,"aucun texte, même dans la page affichée: 1",0,0
+af,afwiki-20261001-pages-articles.xml.bz2,157783330,131205,131092,113,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 111",39811263,116.0
+ak,akwiki-20261001-pages-articles.xml.bz2,251976,1,1,0,,17,17
+am,amwiki-20261001-pages-articles.xml.bz2,9185669,16371,16286,85,"aucun texte, même dans la page affichée: 35; doublon exact d'un texte déjà gardé: 50",1913680,22.0
+ann,annwiki-20261001-pages-articles.xml.bz2,722036,495,494,1,"aucun texte, même dans la page affichée: 1",89187,106.5
+ar,arwiki-20261001-pages-articles1.xml-p1p340838.bz2;arwiki-20261001-pages-articles2.xml-p340839p1205738.bz2;arwiki-20261001-pages-articles3.xml-p1205739p2482315.bz2;arwiki-20261001-pages-articles4.xml-p2482316p3982315.bz2;arwiki-20261001-pages-articles4.xml-p3982316p4045107.bz2;arwiki-20261001-pages-articles5.xml-p4045108p5545107.bz2;arwiki-20261001-pages-articles5.xml-p5545108p6060732.bz2;arwiki-20261001-pages-articles6.xml-p6060733p7560732.bz2;arwiki-20261001-pages-articles6.xml-p7560733p9060732.bz2;arwiki-20261001-pages-articles6.xml-p9060733p10525959.bz2,2025926130,1334057,1332978,1079,"aucun texte, même dans la page affichée: 5; doublon exact d'un texte déjà gardé: 1070; page affichée non disponible (nosuchrevid): 3; règle enfreinte : reste de balisage wiki/HTML : « ]] »: 1",325887494,47.0
+ary,arywiki-20261001-pages-articles.xml.bz2,18386611,20367,20321,46,doublon exact d'un texte déjà gardé: 46,3954132,145
+arz,arzwiki-20261001-pages-articles.xml.bz2,299281321,1633717,1631258,2459,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 2457",112902897,38.0
+bm,bmwiki-20261001-pages-articles.xml.bz2,859577,1343,1339,4,doublon exact d'un texte déjà gardé: 4,87672,13
+bol,bolwiki-20261001-pages-articles.xml.bz2,1691443,610,608,2,"aucun texte, même dans la page affichée: 1; page affichée non disponible (nosuchrevid): 1",139345,127.5
+dag,dagwiki-20261001-pages-articles.xml.bz2,40836492,16013,15711,302,"aucun texte, même dans la page affichée: 28; doublon exact d'un texte déjà gardé: 274",6842551,93
+dga,dgawiki-20261001-pages-articles.xml.bz2,5419562,4504,4502,2,doublon exact d'un texte déjà gardé: 2,1467673,185.0
+din,dinwiki-20261001-pages-articles.xml.bz2,600856,473,472,1,doublon exact d'un texte déjà gardé: 1,85380,202.5
+ee,eewiki-20261001-pages-articles.xml.bz2,1520847,1724,1723,1,doublon exact d'un texte déjà gardé: 1,308095,60
+fat,fatwiki-20261001-pages-articles.xml.bz2,3559313,2184,2183,1,"aucun texte, même dans la page affichée: 1",639544,196
+ff,ffwiki-20261001-pages-articles.xml.bz2,23164206,34225,34107,118,"aucun texte, même dans la page affichée: 1; doublon exact d'un texte déjà gardé: 117",7960968,148
+fon,fonwiki-20261001-pages-articles.xml.bz2,1525320,6180,6177,3,"aucun texte, même dans la page affichée: 3",584384,76
+fr,,,100000,99961,39,doublon exact d'un texte déjà gardé: 39,51024925,213
+gpe,gpewiki-20261001-pages-articles.xml.bz2,16521406,5875,5873,2,doublon exact d'un texte déjà gardé: 2,3742386,332
+gur,gurwiki-20261001-pages-articles.xml.bz2,2619495,1749,1748,1,"aucun texte, même dans la page affichée: 1",621698,189.0
+guw,guwwiki-20261001-pages-articles.xml.bz2,2001261,1838,1837,1,doublon exact d'un texte déjà gardé: 1,429941,156
+ha,hawiki-20261001-pages-articles.xml.bz2,186226465,123826,123651,175,"aucun texte, même dans la page affichée: 9; doublon exact d'un texte déjà gardé: 163; page affichée non disponible (nosuchrevid): 3",64034554,329
+hz,hzwiki-20261001-pages-articles.xml.bz2,7429,1,0,1,"aucun texte, même dans la page affichée: 1",0,0
+ig,igwiki-20261001-pages-articles.xml.bz2,87394252,56532,56486,46,"aucun texte, même dans la page affichée: 13; doublon exact d'un texte déjà gardé: 33",25466323,286.0
+igl,iglwiki-20261001-pages-articles.xml.bz2,3377149,1984,1981,3,doublon exact d'un texte déjà gardé: 3,642721,189
+kab,kabwiki-20261001-pages-articles.xml.bz2,5078257,7322,7315,7,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 5",983325,55
+kai,kaiwiki-20261001-pages-articles.xml.bz2,1553012,3373,3368,5,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 2",86821,14.0
+kaj,kajwiki-20261001-pages-articles.xml.bz2,580641,996,996,0,,155920,83.0
+kbp,kbpwiki-20261001-pages-articles.xml.bz2,1631750,1973,1972,1,doublon exact d'un texte déjà gardé: 1,474431,230.0
+kcg,kcgwiki-20261001-pages-articles.xml.bz2,4701766,2185,2183,2,doublon exact d'un texte déjà gardé: 2,329907,89
+kg,kgwiki-20261001-pages-articles.xml.bz2,1466232,2259,2256,3,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 1",217744,33.0
+ki,kiwiki-20261001-pages-articles.xml.bz2,1693375,3015,2999,16,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 13",228771,22
+kj,kjwiki-20261001-pages-articles.xml.bz2,7508,6,5,1,"aucun texte, même dans la page affichée: 1",111,13
+knc,kncwiki-20261001-pages-articles.xml.bz2,1929140,2761,2759,2,doublon exact d'un texte déjà gardé: 2,701216,122
+kr,krwiki-20261001-pages-articles.xml.bz2,4713,1,0,1,"aucun texte, même dans la page affichée: 1",0,0
+kus,kuswiki-20261001-pages-articles.xml.bz2,2621791,1723,1721,2,doublon exact d'un texte déjà gardé: 2,1050711,333
+lg,lgwiki-20261001-pages-articles.xml.bz2,9764980,7158,7109,49,"aucun texte, même dans la page affichée: 13; doublon exact d'un texte déjà gardé: 36",2027806,165
+ln,lnwiki-20261001-pages-articles.xml.bz2,3796494,5615,5586,29,"aucun texte, même dans la page affichée: 17; doublon exact d'un texte déjà gardé: 12",663671,43.0
+mg,mgwiki-20261001-pages-articles.xml.bz2,38099159,104121,104097,24,"aucun texte, même dans la page affichée: 6; doublon exact d'un texte déjà gardé: 18",13543166,38
+mos,moswiki-20261001-pages-articles.xml.bz2,2866910,1722,1634,88,doublon exact d'un texte déjà gardé: 88,1028622,350.0
+ng,ngwiki-20261001-pages-articles.xml.bz2,84877,21,20,1,doublon exact d'un texte déjà gardé: 1,2478,8.0
+nqo,nqowiki-20261001-pages-articles.xml.bz2,2103901,1734,1726,8,doublon exact d'un texte déjà gardé: 8,812329,169.0
+nr,nrwiki-20261001-pages-articles.xml.bz2,841276,615,613,2,doublon exact d'un texte déjà gardé: 2,143348,172
+nso,nsowiki-20261001-pages-articles.xml.bz2,4294252,9551,9510,41,"aucun texte, même dans la page affichée: 7; doublon exact d'un texte déjà gardé: 34",659590,22.0
+nup,nupwiki-20261001-pages-articles.xml.bz2,452561,1612,1609,3,doublon exact d'un texte déjà gardé: 3,130019,75
+ny,nywiki-20261001-pages-articles.xml.bz2,3123737,1293,1288,5,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 3",266263,74.0
+om,omwiki-20261001-pages-articles.xml.bz2,2858104,2424,2386,38,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 35",654865,83.0
+pcm,pcmwiki-20261001-pages-articles.xml.bz2,2317926,1902,1902,0,,581580,243.0
+rn,rnwiki-20261001-pages-articles.xml.bz2,1165594,1172,1170,2,"aucun texte, même dans la page affichée: 1; doublon exact d'un texte déjà gardé: 1",163619,24.0
+rw,rwwiki-20261001-pages-articles.xml.bz2,12540125,12392,12327,65,"aucun texte, même dans la page affichée: 22; doublon exact d'un texte déjà gardé: 40; page affichée non disponible (nosuchrevid): 3",2538144,123
+sg,sgwiki-20261001-pages-articles.xml.bz2,570030,506,505,1,doublon exact d'un texte déjà gardé: 1,20975,14
+shi,shiwiki-20261001-pages-articles.xml.bz2,5112849,10970,10952,18,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 16",2068450,231.0
+sn,snwiki-20261001-pages-articles.xml.bz2,5220792,12229,12216,13,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 10",1276173,70.0
+so,sowiki-20261001-pages-articles.xml.bz2,23148569,15600,15572,28,"aucun texte, même dans la page affichée: 13; doublon exact d'un texte déjà gardé: 14; page affichée non disponible (nosuchrevid): 1",4095472,102.0
+ss,sswiki-20261001-pages-articles.xml.bz2,1735819,1473,1471,2,doublon exact d'un texte déjà gardé: 2,202865,72
+st,stwiki-20261001-pages-articles.xml.bz2,3922299,2716,2710,6,"aucun texte, même dans la page affichée: 4; doublon exact d'un texte déjà gardé: 2",703256,101.0
+sw,swwiki-20261001-pages-articles.xml.bz2,71747684,129190,129081,109,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 106",16420143,54
+ti,tiwiki-20261001-pages-articles.xml.bz2,1311183,551,547,4,"aucun texte, même dans la page affichée: 2; doublon exact d'un texte déjà gardé: 2",90414,36
+tig,tigwiki-20261001-pages-articles.xml.bz2,1317647,386,385,1,doublon exact d'un texte déjà gardé: 1,468970,642
+tn,tnwiki-20261001-pages-articles.xml.bz2,13448602,7338,7309,29,"aucun texte, même dans la page affichée: 9; doublon exact d'un texte déjà gardé: 20",4690216,339
+ts,tswiki-20261001-pages-articles.xml.bz2,2677624,1582,1558,24,"aucun texte, même dans la page affichée: 3; doublon exact d'un texte déjà gardé: 21",380073,158.5
+tum,tumwiki-20261001-pages-articles.xml.bz2,21592832,19944,19880,64,"aucun texte, même dans la page affichée: 6; doublon exact d'un texte déjà gardé: 58",1991994,18.0
+tw,twwiki-20261001-pages-articles.xml.bz2,6950938,5644,5642,2,"aucun texte, même dans la page affichée: 1; doublon exact d'un texte déjà gardé: 1",2041669,207.5
+ve,vewiki-20261001-pages-articles.xml.bz2,682145,1298,1295,3,doublon exact d'un texte déjà gardé: 3,179580,29
+wo,wowiki-20261001-pages-articles.xml.bz2,2260689,1812,1809,3,"aucun texte, même dans la page affichée: 1; doublon exact d'un texte déjà gardé: 2",608966,50
+xh,xhwiki-20261001-pages-articles.xml.bz2,4103910,3111,3090,21,"aucun texte, même dans la page affichée: 15; doublon exact d'un texte déjà gardé: 6",538536,84.0
+yo,yowiki-20261001-pages-articles.xml.bz2,29548531,42398,41803,595,"aucun texte, même dans la page affichée: 150; doublon exact d'un texte déjà gardé: 445",5637920,11
+zgh,zghwiki-20261001-pages-articles.xml.bz2,6609196,12279,12192,87,doublon exact d'un texte déjà gardé: 86; page affichée non disponible (nosuchrevid): 1,2359632,232.0
+zu,zuwiki-20261001-pages-articles.xml.bz2,8430713,13644,13603,41,"aucun texte, même dans la page affichée: 28; doublon exact d'un texte déjà gardé: 12; page affichée non disponible (nosuchrevid): 1",1118349,9

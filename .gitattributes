@@ -1,2 +1,0 @@
-data/processed/**/*.jsonl filter=lfs diff=lfs merge=lfs -text
-data/raw/dumps/**/*.bz2 filter=lfs diff=lfs merge=lfs -text
