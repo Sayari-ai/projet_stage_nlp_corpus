@@ -33,7 +33,7 @@ def pages_du_dump(chemin):
             champs = {}
             for c in el.iter():
                 nom = _local(c.tag)
-                if nom not in champs:                      # premier élément de ce nom (id de page avant id de révision)
+                if nom not in champs:                      
                     champs[nom] = c
             rev = champs["revision"]
             rev_id = next(c for c in rev if _local(c.tag) == "id")
@@ -48,4 +48,4 @@ def pages_du_dump(chemin):
                 "modele": champs["model"].text if "model" in champs else "wikitext",
                 "wikitexte": (texte.text or "") if texte is not None else "",
             }
-            racine.clear()                                 # libère la mémoire des pages déjà lues
+            racine.clear()                                 
